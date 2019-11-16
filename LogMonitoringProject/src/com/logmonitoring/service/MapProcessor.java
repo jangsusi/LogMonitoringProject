@@ -5,12 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.HashMap;
 
-import com.logmonitoring.model.LogDataPlusTime;
 import com.logmonitoring.model.LogData;
-import com.logmonitoring.model.LogDataPlusCount;
 
 public class MapProcessor {
 	HashMap<LogData,Integer> map;
@@ -27,15 +24,7 @@ public class MapProcessor {
 		return map;
 	}
 	
-	public void putData(LogDataPlusTime logData) {
-		if(map.get(logData) == null) {
-			map.put(logData, 1);
-		} else {
-			map.put(logData, map.get(logData)+1);
-		}
-	}
-
-	private void putData(LogDataPlusCount logData) {
+	public void putData(LogData logData) {
 		if(map.get(logData) == null) {
 			map.put(logData, logData.getCount());
 		} else {
@@ -44,16 +33,16 @@ public class MapProcessor {
 	}
 	
 	public void putData(File file) {
-		if(file.length() == 0) {
+		if(file.length() == 0 || !file.exists()) {
 			return;
 		}
 		try (BufferedReader bfReader = new BufferedReader(new FileReader(file))) {
-			String line = bfReader.readLine();
-			do {
-				LogData logData=new LogDataPlusCount(line);
+			String line = null;
+			while((line = bfReader.readLine()) != null) {
+				LogData logData = new LogData(line);
 				logData.setLogData();			
-				putData((LogDataPlusCount)logData);
-			} while((line=bfReader.readLine()) != null);
+				putData(logData);
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println(file.getName() + "파일을 찾을 수 없음(저장실패)");
 			e.printStackTrace();

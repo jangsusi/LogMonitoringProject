@@ -3,14 +3,13 @@ package com.logmonitoring.service;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
-import com.logmonitoring.common.Util;
+import com.logmonitoring.model.TraceData;
 
+//traceData랑 file간의 교류
 public class TraceFileProcessor {
 	File traceFile;
 	
@@ -21,34 +20,25 @@ public class TraceFileProcessor {
 	public long size() {
 		return traceFile.length();
 	}
-
-	public String getLastInfo() {
-		String fileInfo = null;
+	
+	public TraceData getLastInfo() {
+		TraceData traceData = null;
 		try (BufferedReader bfReader = new BufferedReader(new FileReader(traceFile))) {
-			fileInfo = bfReader.readLine();	
+			traceData = new TraceData(bfReader.readLine());	
 		} catch (IOException e) {
 			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
 			e.printStackTrace();
 		}
-		return fileInfo;
+		return traceData;
 	}
 
-	public void writeLastInfo(String fileName, RandomAccessFile rdAccessFile) {
+	public void writeLastInfo(TraceData traceData) {
 		try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter(traceFile))) {
-			bfWriter.write(fileName + " " + rdAccessFile.getFilePointer());	
+			bfWriter.write(traceData.getData());	
 		} catch (IOException e) {
 			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
 			e.printStackTrace();
 		}
 	}
-
-//	public void writeLastInfo(String fileName) {
-//		try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter(traceFile))) {
-//			bfWriter.write(fileName);	
-//		} catch (IOException e) {
-//			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
-//			e.printStackTrace();
-//		}
-//	}
 
 }

@@ -3,6 +3,7 @@ package com.logmonitoring.main;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,12 +75,9 @@ public class ServerFileStorage {
 	}
 
 	public void downloadFileToLocal() {
-		try {
-			channelSftp.cd(Util.SERVER_DIR);
-			ChannelSftp.LsEntry file = (ChannelSftp.LsEntry)channelSftp.ls("*.txt").lastElement();
-			try (InputStream in = channelSftp.get(file.getFilename());
-					BufferedInputStream bin = new BufferedInputStream(in);) {
-				File localFile = new File(Util.ACCESS_FILE_DIR + file.getFilename());
+			File file = new File("C:/Users/user/Desktop/newLog/access_2019-11-17.txt");
+			File localFile = new File(Util.ACCESS_FILE_DIR + "access_2019-11-17.txt");
+			try (BufferedInputStream bin = new BufferedInputStream(new FileInputStream(file))) {
 				BufferedOutputStream fos = new BufferedOutputStream(new FileOutputStream(localFile));
 				int data;
 				byte[] buffer = new byte[1024 * 8];
@@ -88,13 +86,9 @@ public class ServerFileStorage {
 				}
 				fos.close();
 			} catch (IOException e) {
-				System.out.println(file.getFilename() + "파일 존재하지 않음 \n" + e.getMessage());
+				System.out.println(file.getName() + "파일 존재하지 않음 \n" + e.getMessage());
 				e.printStackTrace();
 			}
-		} catch (SftpException e1) {
-			System.out.println("올바르지 않은 경로 목록\n" + e1.getMessage());
-			e1.printStackTrace();
-		}
 	}
 
 }

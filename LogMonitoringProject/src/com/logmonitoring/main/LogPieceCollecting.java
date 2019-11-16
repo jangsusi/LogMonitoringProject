@@ -20,19 +20,23 @@ public class LogPieceCollecting extends LogCollecting {
 	public void startLogCollecting() {
 		System.out.println(Util.TIME_FILE_DIR[type] + "만들기 시작");
 		findStartPlace();
+		if(startIndex == fileList.length) {
+			return;
+		}
 		for (int i = startIndex; i < fileList.length; i++) {
 			traceData.setName(fileList[i].getName());
 			try (RandomAccessFile rdAccessFile = new RandomAccessFile(fileList[i], "r")) {
-				rdAccessFile.seek(startPointer);
-				startPointer = 0;
+				if(i == startIndex) {
+					rdAccessFile.seek(startPointer);
+				}
 				String logLine = null;
 				while ((logLine = rdAccessFile.readLine()) != null) {
-					traceData.setPointer(rdAccessFile.getFilePointer());
 					LogData logData = new LogDataPlusTime(logLine);
 					if (!logData.setLogData()) {
 						continue;
 					}
 					isTimeToWriteFile((TimeCheckable) logData, traceData);
+					traceData.setPointer(rdAccessFile.getFilePointer());
 					logMap.putData(logData);
 				}
 			} catch (FileNotFoundException e) {
@@ -42,6 +46,27 @@ public class LogPieceCollecting extends LogCollecting {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@Override
+	public boolean updateLogCollecting() {
+		ServerFileStorage serverStorage = new ServerFileStorage();
+		serverStorage.downloadFileToLocal();
+		File[] updatedAccessLogFiles = new File(Util.ACCESS_FILE_DIR).listFiles();
+
+		traceData = traceFile.getLastInfo();
+		String lastFileName = traceData.getName();
+		long pointer = traceData.getPointer();
+		
+		String updatedLastFileName = updatedAccessLogFiles[updatedAccessLogFiles.length - 1].getName();
+		if(!updatedLastFileName.equals(lastFileName)) {
+			pointer = 0L;
+		} else if (updatedLastFileName.length() == pointer) {
+			return false;
+		}				
+		traceData.setName(updatedLastFileName);
+		startLogCollecting();
+		return true;
 	}
 
 }

@@ -1,8 +1,6 @@
 package com.logmonitoring.main;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import com.logmonitoring.common.Util;
 import com.logmonitoring.model.TimeCheckable;
@@ -23,14 +21,15 @@ public abstract class LogCollecting {
 	long startPointer;
 
 	abstract public void startLogCollecting();
+	abstract public boolean updateLogCollecting();
 	
 	LogCollecting(int type) {
 		new File(Util.TIME_FILE_DIR[type]).mkdirs();
 		this.type = type;
 		logFile = new LogFileProcessor();
-		traceFile = new TraceFileProcessor(Util.LOCAL_FILE_DIR + Util.TRACE_FILE_DIR[type]);
+		traceFile = new TraceFileProcessor(Util.TRACE_FILE_DIR[type]);
 		traceData = new TraceData();
-		logMap = new MapProcessor();	
+		logMap = new MapProcessor();
 		time = null;
 		startIndex = 0;
 		startPointer = 0L;
@@ -38,24 +37,34 @@ public abstract class LogCollecting {
 
 	protected void findStartPlace() {
 		fileList = new File(Util.MONITORING_FILE_DIR[type]).listFiles();
-		if(traceFile.size() != 0) {
+		if (traceFile.size() != 0) {
 			traceData = traceFile.getLastInfo();
 			startIndex = Util.getFileIndex(fileList, traceData.getName());
-			startPointer = traceData.getPointer();
+			startPointer = traceData.getPointer();			
+		}
+		if(startPointer == fileList[startIndex].length()) {
+			startIndex ++;
+			startPointer = 0L;
 		}
 	}
-	
+
 	protected void isTimeToWriteFile(TimeCheckable timeInfo, TraceData traceData) {
-		if(time == null) {
+		if (time == null) {
 			time = timeInfo.getTime();
 			return;
-		}
-		if (timeInfo.isDifferentTime(time)) {
+		}		
+		if (timeInfo.isDifferentTime(time)){
 			logFile.writeLogFile(logMap, time);
 			traceFile.writeLastInfo(traceData);
-			time = timeInfo.getTime();					
+			time = timeInfo.getTime();
 			logMap.initialize();
-		}	
+		} else if(type == Util.HOUR || type == Util.DAY) {
+			int index = Util.getFileIndex(fileList, traceData.getName());
+			if(index % 5 == 0) {
+				logFile.writeLogFile(logMap, time);
+				traceFile.writeLastInfo(traceData);
+			}
+		}
 	}
 
 }
