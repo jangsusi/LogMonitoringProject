@@ -1,13 +1,21 @@
 package main;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-			LoadLog loadLog=new LoadLog();
-			loadLog.FirstLoad();
-			int count=0;
-			/*while(count!=3) {
+			//ConnectServer loadLog=new ConnectServer("172.22.1.66","jsb568","1234");
+		
+			
+			SaveLog saveLog=new SaveLog(null);
+			
+		 
+			/*int count=0;
+			while(count!=3) {
 				TenThread tenThread=new TenThread();
 				tenThread.start();
 				try {
