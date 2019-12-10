@@ -10,9 +10,11 @@ import java.util.Map;
 public class Main {
 
 	public static final String LOCAL_ACCESS_FILE_DIR="C:/Users/user/Desktop/accessLog/";
+	public static final int FIRST=1;
+	public static final int UPDATE=2;
 	public static void main(String[] args) throws IOException {
 		
-			//ConnectServer loadLog=new ConnectServer("172.22.1.66","jsb568","1234",FIRST);
+		//ConnectServer loadLog=new ConnectServer("172.22.1.66","jsb568","1234",FIRST);
 		
 		SaveLog saveLog=new SaveInitialLog();
 		

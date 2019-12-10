@@ -19,8 +19,7 @@ import com.jcraft.jsch.SftpException;
 
 //최초 실행시 로그파일 전체 받아오는 메소드
 public class ConnectServer {
-	public static final int FIRST=1;
-	public static final int UPDATE=2;
+	
 	
 	private Session session = null;
 	private Channel channel = null;
@@ -64,14 +63,14 @@ public class ConnectServer {
 	    String serverPath="/opt/TerraceTims/log/catalina/webmail";
 	    try {
 			channelSftp.cd(serverPath);
-			if(isFirst==FIRST) {
+			if(isFirst==Main.FIRST) {
 				Vector<ChannelSftp.LsEntry> fileList=channelSftp.ls("*.txt");
 				Collections.sort(fileList);
 				for(ChannelSftp.LsEntry entry :fileList) {
 					WriteFile(entry.getFilename());
 				}
 			}
-			else if(isFirst==UPDATE) {		
+			else if(isFirst==Main.UPDATE) {		
 				WriteFile("access_"+Common.getTime("yyyy-MM-dd")+".txt");
 			}	
 			channelSftp.exit();
@@ -81,9 +80,9 @@ public class ConnectServer {
 			e.printStackTrace();
 		}
 
-	    if(isFirst==FIRST)
+	    if(isFirst==Main.FIRST)
 	    	new SaveInitialLog();
-	    else if(isFirst==UPDATE)
+	    else if(isFirst==Main.UPDATE)
 	    	new SaveUpdatedLog();
 	}
 

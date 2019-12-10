@@ -25,8 +25,8 @@ public class SaveInitialLog extends SaveLog {
 			File file=new File(Main.LOCAL_ACCESS_FILE_DIR);
 			File[] fileList=file.listFiles();
 			int fileNum=fileList.length;
-			//for(int i=0;i<fileNum-1;i++) {
-			for(int i=0;i<1;i++) {
+			for(int i=0;i<fileNum-1;i++) {
+			//for(int i=0;i<1;i++) {
 				bfReader=new BufferedReader(new FileReader(fileList[i]));	
 				String logData=bfReader.readLine();	
 				VariableInitialzation(logData);			
@@ -40,7 +40,7 @@ public class SaveInitialLog extends SaveLog {
 			}
 
 			//'현재-1'분 까지 데이터 저장 위한 변수
-			/*String lastMinute=Common.getTime("mm");
+			String lastMinute=Common.getTime("mm");
 			RandomAccessFile lastFile=new RandomAccessFile(fileList[fileNum-1],"r");
 			String logData=lastFile.readLine();
 			VariableInitialzation(logData);	
@@ -53,7 +53,7 @@ public class SaveInitialLog extends SaveLog {
 			lastFile.close();
 			SaveExtraLogData();
 			
-			RemeberLastPointer(lastFile.getFilePointer());*/
+			RemeberLastPointer(lastFile.getFilePointer());
 			
 		}catch(IOException e) {
 			e.printStackTrace();	
