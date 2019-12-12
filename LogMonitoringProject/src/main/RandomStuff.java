@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 
-public class Common {
+public class RandomStuff {
 	
 	public static String ChangeMMFormat(String Month) {
 		switch(Month) {

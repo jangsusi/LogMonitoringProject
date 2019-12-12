@@ -16,8 +16,9 @@ import java.util.LinkedHashMap;
 import com.jcraft.jsch.ChannelSftp;
 
 public class SaveUpdatedLog extends SaveLog {
-	String lastFileNameRawData;
-	SaveUpdatedLog() {
+	String fileName;
+	SaveUpdatedLog(String fileName) {
+		this.fileName=fileName;
 		LogDataListing();
 	}
 	
@@ -26,16 +27,15 @@ public class SaveUpdatedLog extends SaveLog {
 		try {			
 			BufferedReader fReader=new BufferedReader(new FileReader(PARSING_FILE_DIR+"last_place.txt"));
 				
-			String filePath=Main.LOCAL_ACCESS_FILE_DIR+"access_"+Common.getTime("yyyy-MM-dd")+".txt";
-			
+			//String filePath=Main.LOCAL_ACCESS_FILE_DIR+"access_"+Common.getTime("yyyy-MM-dd")+".txt";
+			String filePath=Main.LOCAL_ACCESS_FILE_DIR+fileName;
+
 			
 			long lastFilePointer=Long.parseLong(fReader.readLine());
 			String lastMinuteFileName=fReader.readLine();
 			String lastHourFileName=fReader.readLine();
 			fReader.close();
-			LastFileToMap(lastMinuteFileName,MINUTE);
-			LastFileToMap(lastHourFileName,HOUR);
-			LastFileToMap(null,DAY);
+			
 			
 			
 			RandomAccessFile lastFile=new RandomAccessFile(filePath,"r");
@@ -46,15 +46,19 @@ public class SaveUpdatedLog extends SaveLog {
 				return;
 			}
 			VariableInitialzation(logData);
+			LastFileToMap(lastMinuteFileName,MINUTE);
+			LastFileToMap(lastHourFileName,HOUR);
+			LastFileToMap(null,DAY);
 			do {
 				if(!logData.split(" ")[4].equals("+0900]"))
 					break;
 				SaveLogData(logData);
 			}while((logData=lastFile.readLine())!=null);
-			lastFile.close();
+			
 			SaveExtraLogData();
 			
 			RemeberLastPointer(lastFile.getFilePointer());		
+			lastFile.close();
 			//DeleteLog();
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -97,6 +101,7 @@ public class SaveUpdatedLog extends SaveLog {
 		if((saveType==MINUTE&&minuteFileName.equals(lastFileName))
 				||(saveType==HOUR&&hourFileName.equals(lastFileName))
 				||saveType==DAY) {
+			System.out.println(fileNameRawData);
 			File file=new File(MakeFileName(fileNameRawData,saveType));
 			try {
 				BufferedReader bfReader=new BufferedReader(new FileReader(file));
