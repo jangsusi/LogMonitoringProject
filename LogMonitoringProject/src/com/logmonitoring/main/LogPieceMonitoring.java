@@ -9,12 +9,12 @@ import com.logmonitoring.common.Util;
 import com.logmonitoring.model.LogData;
 import com.logmonitoring.service.LogFileProcessor;
 import com.logmonitoring.service.MapProcessor;
-import com.logmonitoring.service.TraceProcessor;
+import com.logmonitoring.service.TraceFileProcessor;
 
 public class LogPieceMonitoring implements LogMonitoring {
 	File[] fileList;
 	LogFileProcessor logFile;
-	TraceProcessor traceInfo;
+	TraceFileProcessor traceInfo;
 	MapProcessor logMap;
 	String time;
 	int type;
@@ -23,7 +23,7 @@ public class LogPieceMonitoring implements LogMonitoring {
 		this.type = type;
 		new File(Util.TIME_FILE_DIR[type]).mkdirs();
 		logFile = new LogFileProcessor();
-		traceInfo = new TraceProcessor(Util.LOCAL_FILE_DIR + Util.TRACE_FILE_DIR[type]);
+		traceInfo = new TraceFileProcessor(Util.LOCAL_FILE_DIR + Util.TRACE_FILE_DIR[type]);
 		logMap = new MapProcessor();
 	}
 

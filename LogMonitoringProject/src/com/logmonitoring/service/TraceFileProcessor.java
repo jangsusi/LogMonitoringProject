@@ -11,10 +11,10 @@ import java.io.RandomAccessFile;
 
 import com.logmonitoring.common.Util;
 
-public class TraceProcessor {
+public class TraceFileProcessor {
 	File traceFile;
 	
-	public TraceProcessor(String filePath) {
+	public TraceFileProcessor(String filePath) {
 		traceFile = new File(filePath);
 	}
 

@@ -61,7 +61,7 @@ public class LogFileProcessor {
 			}
 			fileList[num].delete();
 		}
-		TraceProcessor traceFile = new TraceProcessor(Util.LOCAL_FILE_DIR + Util.TRACE_FILE_DIR[type]);
+		TraceFileProcessor traceFile = new TraceFileProcessor(Util.LOCAL_FILE_DIR + Util.TRACE_FILE_DIR[type]);
 		traceFile.editLastPosition(num + 1);
 	}
 
