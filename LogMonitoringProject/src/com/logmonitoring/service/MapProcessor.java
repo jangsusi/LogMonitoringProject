@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
+import com.logmonitoring.model.LogDataPlusTime;
 import com.logmonitoring.model.LogData;
 import com.logmonitoring.model.LogDataPlusCount;
 
@@ -17,12 +18,16 @@ public class MapProcessor {
 	public MapProcessor() {	
 		map = new HashMap<LogData,Integer>();
 	}
+	
+	public void initialize() {
+		map.clear();
+	}
 
 	public HashMap getMap() {
 		return map;
 	}
 	
-	public void putData(LogData logData) {
+	public void putData(LogDataPlusTime logData) {
 		if(map.get(logData) == null) {
 			map.put(logData, 1);
 		} else {
@@ -30,7 +35,7 @@ public class MapProcessor {
 		}
 	}
 
-	public void putData(LogDataPlusCount logData) {
+	private void putData(LogDataPlusCount logData) {
 		if(map.get(logData) == null) {
 			map.put(logData, logData.getCount());
 		} else {
@@ -55,21 +60,6 @@ public class MapProcessor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public RandomAccessFile putData(RandomAccessFile rdAccessFile) {
-		try {
-			String readLine = rdAccessFile.readLine();
-			do {
-				LogData logData = new LogDataPlusCount(readLine);
-				logData.setLogData();
-				putData((LogDataPlusCount)logData);
-			} while((readLine = rdAccessFile.readLine()) != null);	
-		} catch (IOException e) {
-			System.out.println("파일을 찾을 수 없음(저장실패)");
-			e.printStackTrace();
-		}
-		return rdAccessFile;
 	}
 
 }

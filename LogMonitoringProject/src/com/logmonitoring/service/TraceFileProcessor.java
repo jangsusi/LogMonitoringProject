@@ -23,35 +23,32 @@ public class TraceFileProcessor {
 	}
 
 	public String getLastInfo() {
-		String filePosition = "0";
-		String pointer = "0";
+		String fileInfo = null;
 		try (BufferedReader bfReader = new BufferedReader(new FileReader(traceFile))) {
-			filePosition = bfReader.readLine();
-			pointer = bfReader.readLine();
+			fileInfo = bfReader.readLine();	
 		} catch (IOException e) {
 			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
 			e.printStackTrace();
 		}
-		return filePosition + " "+ pointer;
+		return fileInfo;
 	}
 
-	public void writeLastPlace(int pos, RandomAccessFile rdAccessFile) {
+	public void writeLastInfo(String fileName, RandomAccessFile rdAccessFile) {
 		try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter(traceFile))) {
-			bfWriter.write(pos + "\n" + rdAccessFile.getFilePointer());	
+			bfWriter.write(fileName + " " + rdAccessFile.getFilePointer());	
 		} catch (IOException e) {
 			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
 			e.printStackTrace();
 		}
 	}
 
-	public void editLastPosition(int lastPos) {
-		String pointer = getLastInfo().split(" ")[Util.FILE_POINTER];
-		try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter(traceFile))) {		
-			bfWriter.write(lastPos + "\n" + pointer);	
-		} catch (IOException e) {
-			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
-			e.printStackTrace();
-		}
-	}
+//	public void writeLastInfo(String fileName) {
+//		try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter(traceFile))) {
+//			bfWriter.write(fileName);	
+//		} catch (IOException e) {
+//			System.out.println(traceFile.getName() + "파일 존재 안함.\n");
+//			e.printStackTrace();
+//		}
+//	}
 
 }
