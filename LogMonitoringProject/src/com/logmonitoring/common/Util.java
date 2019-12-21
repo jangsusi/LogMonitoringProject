@@ -16,17 +16,21 @@ public class Util {
 	public static final String url="172.22.1.66";
 	public static final String id="jsb568";
 	public static final String password="1234";
-	public static final int FILE_POSITION = 0;
+	public static final int FILE_NAME = 0;
 	public static final int FILE_POINTER = 1;
 	public static final int MINUTE = 0;
 	public static final int HOUR = 1;
 	public static final int DAY = 2;
+	public static final int MINUTE_FRONT_POSITION = 10;
+	public static final int MINUTE_LAST_POSITION = 12;
 	public static final int MINUTE_FILE_NAME_LENGTH = 16;
 	public static final int HOUR_FILE_NAME_LENGTH = 14;
 	public static final String[] TIME_FILE_DIR = {MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
 	public static final String[] MONITORING_FILE_DIR = {ACCESS_FILE_DIR, MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
 	public static final String[] TRACE_FILE_DIR = {"minute_trace.txt", "hour_trace.txt", "day_trace.txt"};
+
 	
+
 	public static String ChangeMMFormat(String Month) {
 		switch(Month) {
 			case "Jan":
@@ -52,31 +56,34 @@ public class Util {
 			case "Nov":
 				return "11";
 			case "Dec":
-				return "12";				
-		}
-		return null;
-	}
-	
-	public static String getTime(String line) {
-		String[] timeFactors = line.split(" ")[3].split("/|:");
-		StringBuilder strBuilder = new StringBuilder();
-		String month = ChangeMMFormat(timeFactors[1]);
-		strBuilder.append(timeFactors[2]).append(month).append(timeFactors[0].substring(1))
-			.append(timeFactors[3]).append(timeFactors[4]).append(".txt");
-		return strBuilder.toString();
-	}
-	
-	public static String getTime(File file) {
-		if(file.getName().length() == MINUTE_FILE_NAME_LENGTH) {
-			return file.getName().substring(0, 10) + ".txt";
-		} else {
-			String fileName = file.getName(); 
-			StringBuilder strBuilder = new StringBuilder();
-			strBuilder.append("stat_").append(fileName.substring(0,4)).append("-").append(fileName.substring(4,6))
-				.append("-").append(fileName.substring(6,8)).append(".txt");
-			return strBuilder.toString();
+				return "12";	
+			default :
+				return null;
 		}
 	}
+	
+	//LogPieceMonitoring
+//	public static String getTime(String line) {
+//		String[] timeFactors = line.split(" ")[3].split("/|:");
+//		StringBuilder strBuilder = new StringBuilder();
+//		String month = ChangeMMFormat(timeFactors[1]);
+//		strBuilder.append(timeFactors[2]).append(month).append(timeFactors[0].substring(1))
+//			.append(timeFactors[3]).append(timeFactors[4]).append(".txt");
+//		return strBuilder.toString();
+//	}
+//	
+//	//LogBundleMonitoring
+//	public static String getTime(File file) {
+//		if(file.getName().length() == MINUTE_FILE_NAME_LENGTH) {
+//			return file.getName().substring(0, 10) + ".txt";
+//		} else {
+//			String fileName = file.getName(); 
+//			StringBuilder strBuilder = new StringBuilder();
+//			strBuilder.append("stat_").append(fileName.substring(0,4)).append("-").append(fileName.substring(4,6))
+//				.append("-").append(fileName.substring(6,8)).append(".txt");
+//			return strBuilder.toString();
+//		}
+//	}
 
 	public static String getDeleteTimeList(int type) {
 		Calendar cal = Calendar.getInstance();
@@ -90,6 +97,17 @@ public class Util {
 			cal.add(Calendar.MINUTE, -60);
 		}
 		return (df.format(cal.getTime()) + ".txt");
+	}
+	
+	public static int getFileIndex(File[] fileList, String fileName) {
+		int index = 0;	
+		for(int i = 0; i <fileList.length; i++) {
+			if(fileList[i].getName().equals(fileName)) {
+				break;
+			}
+			index++;
+		}
+		return (index == fileList.length ? 0 : index);
 	}
 
 }
