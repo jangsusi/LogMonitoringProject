@@ -6,7 +6,7 @@ import com.logmonitoring.common.Util;
 public class Main {
 	
 	public static void main(String[] args) {
-		
+		 
 //		ServerFileStorage serverStorage = new ServerFileStorage();
 //		serverStorage.downloadFilesToLocal();
 		
@@ -19,8 +19,8 @@ public class Main {
 			monitoring.startLogCollecting();
 		}
 		
-		UpdatedLogCollecting thread = new UpdatedLogCollecting();
-		thread.start();
+		UpdatedLogCollecting updatedLogCollecting = new UpdatedLogCollecting();
+		updatedLogCollecting.start();
 		
 	}
 
