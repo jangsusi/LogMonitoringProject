@@ -27,7 +27,7 @@ public class Util {
 	public static final int HOUR_FILE_NAME_LENGTH = 14;
 	public static final String[] TIME_FILE_DIR = {MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
 	public static final String[] MONITORING_FILE_DIR = {ACCESS_FILE_DIR, MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
-	public static final String[] TRACE_FILE_DIR = {LOCAL_FILE_DIR + "minute_trace.txt",LOCAL_FILE_DIR +  "hour_trace.txt",LOCAL_FILE_DIR +  "day_trace.txt"};
+	public static final String[] TRACE_FILE_DIR = {"minute_trace.txt", "hour_trace.txt", "day_trace.txt"};
 
 	
 
@@ -61,29 +61,6 @@ public class Util {
 				return null;
 		}
 	}
-	
-	//LogPieceMonitoring
-//	public static String getTime(String line) {
-//		String[] timeFactors = line.split(" ")[3].split("/|:");
-//		StringBuilder strBuilder = new StringBuilder();
-//		String month = ChangeMMFormat(timeFactors[1]);
-//		strBuilder.append(timeFactors[2]).append(month).append(timeFactors[0].substring(1))
-//			.append(timeFactors[3]).append(timeFactors[4]).append(".txt");
-//		return strBuilder.toString();
-//	}
-//	
-//	//LogBundleMonitoring
-//	public static String getTime(File file) {
-//		if(file.getName().length() == MINUTE_FILE_NAME_LENGTH) {
-//			return file.getName().substring(0, 10) + ".txt";
-//		} else {
-//			String fileName = file.getName(); 
-//			StringBuilder strBuilder = new StringBuilder();
-//			strBuilder.append("stat_").append(fileName.substring(0,4)).append("-").append(fileName.substring(4,6))
-//				.append("-").append(fileName.substring(6,8)).append(".txt");
-//			return strBuilder.toString();
-//		}
-//	}
 
 	public static String getDeleteTimeList(int type) {
 		Calendar cal = Calendar.getInstance();

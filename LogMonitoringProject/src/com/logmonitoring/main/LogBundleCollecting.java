@@ -14,7 +14,7 @@ public class LogBundleCollecting extends LogCollecting {
 
 	@Override
 	public void startLogCollecting() {
-		System.out.println(Util.TIME_FILE_DIR[type] + "¸¸µé±â ½ÃÀÛ");
+		System.out.println(Util.TIME_FILE_DIR[type] + "Â¸Â¸ÂµÃ©Â±Ã¢ Â½ÃƒÃ€Ã›");
 		findStartPlace();
 		if(startIndex == fileList.length) {
 			return;
