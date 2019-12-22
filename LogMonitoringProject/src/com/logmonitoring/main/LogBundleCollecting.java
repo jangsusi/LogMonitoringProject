@@ -14,7 +14,7 @@ public class LogBundleCollecting extends LogCollecting {
 
 	@Override
 	public void startLogCollecting() {
-		System.out.println(Util.TIME_FILE_DIR[type] + "¸¸µé±â ½ÃÀÛ");
+		System.out.println(Util.TIME_FILE_DIR[type] + "만들기 시작");
 		findStartPlace();
 		if(startIndex == fileList.length) {
 			return;
@@ -38,6 +38,7 @@ public class LogBundleCollecting extends LogCollecting {
 	
 	@Override
 	public boolean updateLogCollecting() {
+		System.out.println(Util.TIME_FILE_DIR[type] + "업데이트 시작");
 		fileList = new File(Util.MONITORING_FILE_DIR[type]).listFiles();
 		File lastFile = fileList[fileList.length - 1];
 		traceData = traceFile.getLastInfo();
@@ -59,8 +60,8 @@ public class LogBundleCollecting extends LogCollecting {
 		traceData.setName(lastFile.getName());
 		traceFile.writeLastInfo(traceData);
 		if(type == Util.DAY) {
+			logFile.deleteLogFile(Util.MINUTE);
 			logFile.deleteLogFile(Util.HOUR);
-			logFile.deleteLogFile(Util.DAY);
 		}
 		return true;
 	}

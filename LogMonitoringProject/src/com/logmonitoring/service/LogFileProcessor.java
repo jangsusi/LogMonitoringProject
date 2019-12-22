@@ -52,9 +52,17 @@ public class LogFileProcessor {
 	}
 
 	public void deleteLogFile(int type) {
-		String lastFileName = Util.getDeleteTimeList(type);
-		System.out.println(lastFileName);
+		String lastFileName = Util.getDeleteFileList(type);
 		File[] fileList = new File(Util.TIME_FILE_DIR[type]).listFiles();
+		if(type == Util.MINUTE) {
+			if(fileList.length <= 60) {
+				return;
+			}
+		}else if (type == Util.HOUR) {
+			if(fileList.length <= 24) {
+				return;
+			}
+		}
 		int num = 0;
 		for (num = 0; num < fileList.length; num++) {
 			if (fileList[num].getName().equals(lastFileName)) {

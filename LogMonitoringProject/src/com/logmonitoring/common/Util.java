@@ -27,11 +27,11 @@ public class Util {
 	public static final int HOUR_FILE_NAME_LENGTH = 14;
 	public static final String[] TIME_FILE_DIR = {MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
 	public static final String[] MONITORING_FILE_DIR = {ACCESS_FILE_DIR, MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
-	public static final String[] TRACE_FILE_DIR = {"minute_trace.txt", "hour_trace.txt", "day_trace.txt"};
+	public static final String[] TRACE_FILE_DIR = {LOCAL_FILE_DIR + "minute_trace.txt",LOCAL_FILE_DIR + "hour_trace.txt",LOCAL_FILE_DIR + "day_trace.txt"};
 
 	
 
-	public static String ChangeMMFormat(String Month) {
+	public static String changeMMFormat(String Month) {
 		switch(Month) {
 			case "Jan":
 				return "01";
@@ -62,7 +62,7 @@ public class Util {
 		}
 	}
 
-	public static String getDeleteTimeList(int type) {
+	public static String getDeleteFileList(int type) {
 		Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         DateFormat df = null;

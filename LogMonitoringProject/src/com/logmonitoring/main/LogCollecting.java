@@ -40,8 +40,8 @@ public abstract class LogCollecting {
 		if (traceFile.size() != 0) {
 			traceData = traceFile.getLastInfo();
 			startIndex = Util.getFileIndex(fileList, traceData.getName());
-			startPointer = traceData.getPointer();			
-		}
+			startPointer = traceData.getPointer();				
+		}		
 		if(startPointer == fileList[startIndex].length()) {
 			startIndex ++;
 			startPointer = 0L;

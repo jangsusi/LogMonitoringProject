@@ -46,7 +46,7 @@ public class LogDataPlusTime extends LogData implements TimeCheckable {
 	public String setTime(String rawTime) {
 		String[] timeFactors = rawTime.split(" ")[3].split("/|:");
 		StringBuilder strBuilder = new StringBuilder();
-		String month = Util.ChangeMMFormat(timeFactors[1]);
+		String month = Util.changeMMFormat(timeFactors[1]);
 		strBuilder.append(timeFactors[2]).append(month).append(timeFactors[0].substring(1))
 			.append(timeFactors[3]).append(timeFactors[4]).append(".txt");
 		return strBuilder.toString();

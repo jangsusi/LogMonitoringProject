@@ -50,6 +50,7 @@ public class LogPieceCollecting extends LogCollecting {
 	
 	@Override
 	public boolean updateLogCollecting() {
+		System.out.println(Util.TIME_FILE_DIR[type] + "업데이트 시작");
 		ServerFileStorage serverStorage = new ServerFileStorage();
 		serverStorage.downloadFileToLocal();
 		File[] updatedAccessLogFiles = new File(Util.ACCESS_FILE_DIR).listFiles();

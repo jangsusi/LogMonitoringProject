@@ -19,7 +19,7 @@ public class UpdatedLogCollecting extends Thread {
 		File[] minuteFiles = new File(Util.TIME_FILE_DIR[Util.MINUTE]).listFiles();
 		String lastMinuteFileName = minuteFiles[minuteFiles.length - 1].getName();
 		int minuteCheck = Integer.parseInt(lastMinuteFileName.substring(Util.MINUTE_FRONT_POSITION, Util.MINUTE_LAST_POSITION)) + 1;
-		DateFormat df = new SimpleDateFormat("mm");
+		DateFormat minute = new SimpleDateFormat("mm");
 		DateFormat hour = new SimpleDateFormat("HH");
 		Calendar cal = Calendar.getInstance();
 		if (minuteCheck == 60) {
@@ -27,8 +27,9 @@ public class UpdatedLogCollecting extends Thread {
 		}
 		while (true) {
 			cal.setTime(new Date());
-			int nowTime = Integer.parseInt(df.format(cal.getTime()));
+			int nowTime = Integer.parseInt(minute.format(cal.getTime()));
 			if (nowTime != minuteCheck) {
+				System.out.println("현재 분 : "+ nowTime + "분 업데이트 시작");
 				minuteCheck = nowTime;
 				LogCollecting minuteUpdate = new LogPieceCollecting(Util.MINUTE);
 				if (minuteUpdate.updateLogCollecting()) {
