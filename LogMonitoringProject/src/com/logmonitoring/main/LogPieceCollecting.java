@@ -35,7 +35,7 @@ public class LogPieceCollecting extends LogCollecting {
 					if (!logData.setLogData()) {
 						continue;
 					}
-					isTimeToWriteFile((TimeCheckable) logData, traceData);
+					isTimeToWriteFile((TimeCheckable)logData, traceData);
 					traceData.setPointer(rdAccessFile.getFilePointer());
 					logMap.putData(logData);
 				}

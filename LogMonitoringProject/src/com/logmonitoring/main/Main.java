@@ -19,8 +19,8 @@ public class Main {
 			monitoring.startLogCollecting();
 		}
 		
-		UpdatedLogCollecting thread = new UpdatedLogCollecting();
-		thread.start();
+//		UpdatedLogCollecting thread = new UpdatedLogCollecting();
+//		thread.start();
 		
 	}
 

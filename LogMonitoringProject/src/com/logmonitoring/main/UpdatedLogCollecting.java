@@ -20,7 +20,6 @@ public class UpdatedLogCollecting extends Thread {
 		String lastMinuteFileName = minuteFiles[minuteFiles.length - 1].getName();
 		int minuteCheck = Integer.parseInt(lastMinuteFileName.substring(Util.MINUTE_FRONT_POSITION, Util.MINUTE_LAST_POSITION)) + 1;
 		DateFormat minute = new SimpleDateFormat("mm");
-		DateFormat hour = new SimpleDateFormat("HH");
 		Calendar cal = Calendar.getInstance();
 		if (minuteCheck == 60) {
 			minuteCheck = 0;
