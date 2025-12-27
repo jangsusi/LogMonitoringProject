@@ -16,15 +16,9 @@ public class Util {
 	public static final String url="172.22.1.66";
 	public static final String id="jsb568";
 	public static final String password="1234";
-	public static final int FILE_NAME = 0;
-	public static final int FILE_POINTER = 1;
 	public static final int MINUTE = 0;
 	public static final int HOUR = 1;
 	public static final int DAY = 2;
-	public static final int MINUTE_FRONT_POSITION = 10;
-	public static final int MINUTE_LAST_POSITION = 12;
-	public static final int MINUTE_FILE_NAME_LENGTH = 16;
-	public static final int HOUR_FILE_NAME_LENGTH = 14;
 	public static final String[] TIME_FILE_DIR = {MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
 	public static final String[] MONITORING_FILE_DIR = {ACCESS_FILE_DIR, MINUTE_FILE_DIR, HOUR_FILE_DIR, DAY_FILE_DIR};
 	public static final String[] TRACE_FILE_DIR = {LOCAL_FILE_DIR + "minute_trace.txt",LOCAL_FILE_DIR + "hour_trace.txt",LOCAL_FILE_DIR + "day_trace.txt"};
